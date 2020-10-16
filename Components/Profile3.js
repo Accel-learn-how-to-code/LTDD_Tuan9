@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import logo from '../img/pipi.jpg';
 import icon from '../img/gear.png';
 import {
@@ -10,7 +10,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import ProfileInformation from '../data/ProfileInformation';
+import data from '../data/ProfileInformation';
 
 function ItemProfile({item}) {
   return (
@@ -24,48 +24,68 @@ function ItemProfile({item}) {
   );
 }
 
-export default function Profile3({route, navigation}) {
-  const infor = ProfileInformation;
-  const {email, name, phone, directory} = route.params;
-  console.log('directory');
-  console.log(directory);
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerTopContent}>
-          <View style={styles.headerTopLabel}>
-            <TouchableOpacity onPress={() => navigation.navigate('List', directory)}>
-              <Text style={styles.smallTopLabel}>Settings</Text>
-            </TouchableOpacity>
-            <Text style={styles.largeTopLabel}>Profile</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.smallTopLabel}>Logout</Text>
-            </TouchableOpacity>
+export default class Profile3 extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0,
+    };
+  }
+  componentDidMount() {
+    //Here is the Trick
+    const {navigation} = this.props;
+    //Adding an event listner om focus
+    //So whenever the screen will have focus it will set the state to zero
+    navigation.addListener('focus', () => {
+      this.setState({count: ++this.state.count});
+    });
+  }
+
+  render() {
+    const {email} = this.props.route.params;
+    let user = data.find((x) => x.email === email);
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.header}>
+          <View style={styles.headerTopContent}>
+            <View style={styles.headerTopLabel}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('List', user)}>
+                <Text style={styles.smallTopLabel}>Edit</Text>
+              </TouchableOpacity>
+              <Text style={styles.largeTopLabel}>Profile</Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Login')}>
+                <Text style={styles.smallTopLabel}>Logout</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.imgContainerBorder}>
+              <Image style={styles.imgContainer} source={logo} />
+            </View>
           </View>
-          <View style={styles.imgContainerBorder}>
-            <Image style={styles.imgContainer} source={logo} />
+          <View style={styles.titleHolder}>
+            <Text style={styles.title}>{user.name}</Text>
+            <Text style={{color: 'black', fontWeight: 'bold'}}>
+              {user.email}
+            </Text>
+          </View>
+          <View style={styles.headerBottomContent}>
+            <View style={styles.headerContent1}>
+              <Text style={styles.title2}>Danh bạ</Text>
+            </View>
+            <View style={styles.headerContent}>
+              <Text style={styles.title3}>{user.phone}</Text>
+            </View>
           </View>
         </View>
-        <View style={styles.titleHolder}>
-          <Text style={styles.title}>{name}</Text>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>{email}</Text>
+        <View style={styles.content}>
+          {user.directory.map((x, index) => {
+            return <ItemProfile key={index} item={x} />;
+          })}
         </View>
-        <View style={styles.headerBottomContent}>
-          <View style={styles.headerContent1}>
-            <Text style={styles.title2}>Danh bạ</Text>
-          </View>
-          <View style={styles.headerContent}>
-            <Text style={styles.title3}>{phone}</Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.content}>
-        {directory.map((x, index) => {
-          return <ItemProfile key={index} item={x} />;
-        })}
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

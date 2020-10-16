@@ -9,19 +9,19 @@ export default class addItemModal extends Component {
     super(props);
     this.state = {
       isVisible: false,
-      title: '',
-      description: '',
+      name: '',
+      phone: '',
+      user: {},
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
   }
-  showModal() {
-    //alert('Show');
+  showModal({user}) {
     this.setState({isVisible: true});
+    this.setState({user: user});
   }
 
   hideModal() {
-    //alert('Hide');
     this.setState({isVisible: false});
   }
 
@@ -35,16 +35,16 @@ export default class addItemModal extends Component {
                 <View style={styles.inputHolder}>
                   <TextInput
                     label="Tên"
-                    value={this.state.title}
+                    value={this.state.name}
                     onChangeText={(text) => {
-                      this.setState({title: text});
+                      this.setState({name: text});
                     }}
                   />
                   <TextInput
                     label="Số điện thoại"
-                    value={this.state.description}
+                    value={this.state.phone}
                     onChangeText={(text) => {
-                      this.setState({description: text});
+                      this.setState({phone: text});
                     }}
                   />
                 </View>
@@ -59,16 +59,18 @@ export default class addItemModal extends Component {
                     style={styles.buttonStyle}
                     mode="text"
                     onPress={() => {
-                      const id = itemData.length + 1;
+                      const index = itemData.findIndex(
+                        (value) => value === this.state.user,
+                      );
+                      const id = itemData[index].directory.length + 1;
                       const newItem = {
-                        id: id,
-                        title: this.state.title,
-                        description: this.state.description,
-                        imageUri:
-                          'https://i.pinimg.com/564x/d5/f7/ef/d5f7efb5c1babc9bb53c093e25f0a2fb.jpg',
+                        id: id.toString(),
+                        name: this.state.name,
+                        phone: this.state.phone,
                       };
-                      itemData.push(newItem);
+                      itemData[index].directory.push(newItem);
                       this.props.parentFlatList.refreshScreen(id);
+                      console.log('test ' + itemData[index].directory);
                       this.hideModal();
                     }}>
                     Accept

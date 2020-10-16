@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
   RefreshControl,
 } from 'react-native';
-//import itemData from '../data/ProfileInformation';
+//import data from '../data/ProfileInformation';
 import AddItemModal from './AddItemModal';
 import EditItemModal from './EditItemModal';
 import FlatListItem from './FlatListItem';
@@ -32,17 +32,19 @@ export default class FlatListExample extends Component {
     this.setState({keyChanged: keyChanged});
   }
 
-  _onPressAdd() {
-    this.AddItemModal.showModal();
+  _onPressAdd({user}) {
+    this.AddItemModal.showModal({user});
   }
 
   render() {
-    let itemData = this.props.route.params;
+    //show Directory
+    let user = this.props.route.params;
+    let itemData = user.directory;
     console.log('List: ' + JSON.stringify(itemData));
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <TouchableHighlight onPress={() => this._onPressAdd()}>
+          <TouchableHighlight onPress={() => this._onPressAdd({user})}>
             <Image style={styles.icon} source={require('../img/plus.png')} />
           </TouchableHighlight>
         </View>
