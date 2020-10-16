@@ -45,6 +45,7 @@ export default class Profile3 extends Component {
     const {email} = this.props.route.params;
     let user = data.find((x) => x.email === email);
     let userIndex = data.findIndex((x) => x.email === email);
+    console.log(user);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.header}>
@@ -82,9 +83,11 @@ export default class Profile3 extends Component {
           </View>
         </View>
         <View style={styles.content}>
-          {user.directory.map((x, index) => {
-            return <ItemProfile key={index} item={x} />;
-          })}
+          {user.directory
+            ? user.directory.map((x, index) => {
+                return <ItemProfile key={index} item={x} />;
+              })
+            : ''}
         </View>
       </ScrollView>
     );

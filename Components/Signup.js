@@ -34,14 +34,16 @@ export default class Signup extends Component {
       alert('You must fill all the field!');
     }
     const newUser = {
+      id: (data.length + 1).toString(),
       email: inputEmail,
       name: inputName,
       phone: inputPhone,
       password: inputPass,
+      directory: [],
     };
     console.log('-----------------');
     data.push(newUser);
-    console.log(data);
+    //console.log(data);
     this.props.navigation.navigate('Profile', newUser);
     return;
   }

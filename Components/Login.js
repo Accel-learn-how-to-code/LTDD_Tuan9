@@ -23,6 +23,17 @@ export default class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    //Here is the Trick
+    const {navigation} = this.props;
+    //Adding an event listner om focus
+    //So whenever the screen will have focus it will set the state to zero
+    navigation.addListener('focus', () => {
+      this.setState({inputEmail: ''});
+      this.setState({inputPass: ''});
+    });
+  }
+
   checkLogin() {
     let inputEmail = this.state.inputEmail.trim();
     let inputPass = this.state.inputPass.trim();
