@@ -14,8 +14,9 @@ export default class FlatListItem extends Component {
     this.setState({count: ++this.state.count});
   }
   render() {
-    var item = this.props.item;
-    var index = this.props.index;
+    let item = this.props.item;
+    let index = this.props.index;
+    let userIndex = this.props.userIndex;
     const swipeSetting = {
       autoClose: true,
       right: [
@@ -33,7 +34,10 @@ export default class FlatListItem extends Component {
                 {
                   text: 'OK',
                   onPress: () => {
-                    this.props.parentFlatList.EditItemModal.showModal(index);
+                    this.props.parentFlatList.EditItemModal.showModal(
+                      index,
+                      userIndex,
+                    );
                   },
                 },
               ],
@@ -57,7 +61,7 @@ export default class FlatListItem extends Component {
                 {
                   text: 'OK',
                   onPress: () => {
-                    itemData.splice(index, 1);
+                    itemData[userIndex].directory.splice(index, 1);
                     //refresh state của screen
                     this.props.parentFlatList.refreshScreen(index);
                   },

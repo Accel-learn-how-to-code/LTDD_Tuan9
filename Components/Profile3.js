@@ -44,13 +44,16 @@ export default class Profile3 extends Component {
   render() {
     const {email} = this.props.route.params;
     let user = data.find((x) => x.email === email);
+    let userIndex = data.findIndex((x) => x.email === email);
     return (
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           <View style={styles.headerTopContent}>
             <View style={styles.headerTopLabel}>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('List', user)}>
+                onPress={() =>
+                  this.props.navigation.navigate('List', {user, userIndex})
+                }>
                 <Text style={styles.smallTopLabel}>Edit</Text>
               </TouchableOpacity>
               <Text style={styles.largeTopLabel}>Profile</Text>

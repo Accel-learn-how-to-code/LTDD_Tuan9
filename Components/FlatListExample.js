@@ -38,9 +38,10 @@ export default class FlatListExample extends Component {
 
   render() {
     //show Directory
-    let user = this.props.route.params;
+    let {user, userIndex} = this.props.route.params;
     let itemData = user.directory;
-    console.log('List: ' + JSON.stringify(itemData));
+
+    //console.log('List: ' + JSON.stringify(itemData));
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
@@ -57,7 +58,12 @@ export default class FlatListExample extends Component {
           data={itemData}
           renderItem={({item, index}) => {
             return (
-              <FlatListItem item={item} index={index} parentFlatList={this} />
+              <FlatListItem
+                item={item}
+                userIndex={userIndex}
+                index={index}
+                parentFlatList={this}
+              />
             );
           }}
           keyExtractor={(item) => item.id}

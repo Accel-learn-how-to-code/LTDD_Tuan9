@@ -10,19 +10,21 @@ export default class EditItemModal extends Component {
     this.state = {
       index: 0,
       isVisible: false,
-      title: '',
-      description: '',
+      name: '',
+      phone: '',
+      userIndex: 0,
     };
     this.hideModal = this.hideModal.bind(this);
     this.showModal = this.showModal.bind(this);
   }
-  showModal(index) {
+  showModal(index, userIndex) {
     //alert('Show');
     this.setState({
       index: index,
+      userIndex: userIndex,
       isVisible: true,
-      title: itemData[index].title,
-      description: itemData[index].description,
+      name: itemData[userIndex].directory[index].name,
+      phone: itemData[userIndex].directory[index].phone,
     });
   }
 
@@ -40,17 +42,17 @@ export default class EditItemModal extends Component {
               <View style={styles.contentHolder}>
                 <View style={styles.inputHolder}>
                   <TextInput
-                    label="Title"
-                    value={this.state.title}
+                    label="Tên"
+                    value={this.state.name}
                     onChangeText={(text) => {
-                      this.setState({title: text});
+                      this.setState({name: text});
                     }}
                   />
                   <TextInput
-                    label="Description"
-                    value={this.state.description}
+                    label="Số điện thoại"
+                    value={this.state.phone}
                     onChangeText={(text) => {
-                      this.setState({description: text});
+                      this.setState({phone: text});
                     }}
                   />
                 </View>
@@ -66,8 +68,13 @@ export default class EditItemModal extends Component {
                     mode="text"
                     onPress={() => {
                       const index = this.state.index;
-                      itemData[index].title = this.state.title;
-                      itemData[index].description = this.state.description;
+                      const userIndex = this.state.userIndex;
+                      itemData[userIndex].directory[
+                        index
+                      ].name = this.state.name;
+                      itemData[userIndex].directory[
+                        index
+                      ].phone = this.state.phone;
                       this.props.parentFlatList.refreshItem(index);
                       this.hideModal();
                     }}>
