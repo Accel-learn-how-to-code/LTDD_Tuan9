@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import logo from '../img/pipi.jpg';
 import {
-  //SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
-  // StatusBar,
   TextInput,
   Button,
   Image,

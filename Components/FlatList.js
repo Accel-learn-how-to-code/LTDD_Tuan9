@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
   FlatList,
   StyleSheet,
   Image,
   SafeAreaView,
   Platform,
   TouchableHighlight,
-  RefreshControl,
 } from 'react-native';
-//import data from '../data/ProfileInformation';
 import AddItemModal from './AddItemModal';
 import EditItemModal from './EditItemModal';
 import FlatListItem from './FlatListItem';

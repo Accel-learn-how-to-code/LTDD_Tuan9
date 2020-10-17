@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   headerTopContent: {
     justifyContent: 'flex-start',
-    backgroundColor: '#5fb075',
+    backgroundColor: '#457B9D',
     alignItems: 'center',
     marginBottom: 15,
   },

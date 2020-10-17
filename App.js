@@ -1,12 +1,4 @@
 import React, {Component} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
 
 //impor react-navigation
 import {NavigationContainer} from '@react-navigation/native';
@@ -15,8 +7,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 //import component
 import Login from './Components/Login';
 import Signup from './Components/Signup';
-import Profile from './Components/Profile3';
-import List from './Components/FlatListExample';
+import Profile from './Components/Profile';
+import List from './Components/FlatList';
 
 const Stack = createStackNavigator();
 
