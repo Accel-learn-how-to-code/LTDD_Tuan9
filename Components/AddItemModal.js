@@ -35,14 +35,12 @@ export default class addItemModal extends Component {
                 <View style={styles.inputHolder}>
                   <TextInput
                     label="Tên"
-                    value={this.state.name}
                     onChangeText={(text) => {
                       this.setState({name: text});
                     }}
                   />
                   <TextInput
                     label="Số điện thoại"
-                    value={this.state.phone}
                     onChangeText={(text) => {
                       this.setState({phone: text});
                     }}
