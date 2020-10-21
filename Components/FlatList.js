@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   View,
+  Text,
   FlatList,
   StyleSheet,
   Image,
@@ -11,6 +12,7 @@ import {
 import AddItemModal from './AddItemModal';
 import EditItemModal from './EditItemModal';
 import FlatListItem from './FlatListItem';
+import data from '../data/ProfileInformation';
 
 export default class FlatListExample extends Component {
   constructor(props) {
@@ -33,16 +35,29 @@ export default class FlatListExample extends Component {
     this.AddItemModal.showModal({user});
   }
 
+  onPressRemove({user}) {
+    const index = data.findIndex((value) => value === user);
+    console.log(data[index].directory);
+    data[index].directory = [];
+    this.refreshItem(index);
+  }
+
   render() {
     //show Directory
     let {user, userIndex} = this.props.route.params;
     let itemData = user.directory;
 
-    //console.log('List: ' + JSON.stringify(itemData));
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-          <TouchableHighlight onPress={() => this._onPressAdd({user})}>
+          <TouchableHighlight
+            style={styles.removeHolder}
+            onPress={() => this.onPressRemove({user})}>
+            <Text style={styles.removeTilte}>Remove All</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.iconHolder}
+            onPress={() => this._onPressAdd({user})}>
             <Image style={styles.icon} source={require('../img/plus.png')} />
           </TouchableHighlight>
         </View>
@@ -96,12 +111,27 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     marginTop: Platform.OS === 'ios' ? 34 : 0,
+  },
+  iconHolder: {
+    flex: 1,
+    flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingRight: 15,
   },
+  removeHolder: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingLeft: 15,
+  },
   icon: {
     height: 25,
     width: 25,
+  },
+  removeTilte: {
+    color: '#fff',
+    fontSize: 18,
   },
 });
